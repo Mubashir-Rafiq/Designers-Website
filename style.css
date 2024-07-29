@@ -51,7 +51,7 @@ main{
 .hero-nav{
     height: 10vh;
     width: 100%;
-    background-color: black;
+    background-color: rgb(6, 5, 5);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -159,6 +159,12 @@ main{
 .work-container{
     padding: 0 3vw;
     margin: 10rem 0 10rem 0;
+}
+
+.work-container img{
+    display: none;
+    position: absolute;
+    max-width: 30%;
 }
 
 .work_boxes{
