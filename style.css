@@ -34,6 +34,7 @@ main{
     transform: scale(1,1);
     transition: all 0.1s ease-out  0s;
     display: none;
+    pointer-events: none;
 }
 
 .hero-container{
@@ -165,6 +166,7 @@ main{
     display: none;
     position: absolute;
     max-width: 30%;
+    pointer-events: none;
 }
 
 .work_boxes{
