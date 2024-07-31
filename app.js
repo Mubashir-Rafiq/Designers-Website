@@ -5,13 +5,26 @@ const workBoxes = document.querySelectorAll(".work_boxes");
 const imgPlug = document.querySelector(".img-plug");
 const imgIxper = document.querySelector(".img-ixperience");
 const imgHudu= document.querySelector(".img-hudu");
+const heroEnd = document.querySelector(".hero-end");
+const headBox1H1 = document.querySelectorAll('.head_box1 h1');
+const smallHeadings =document.querySelectorAll('.move-head-ele *');
 
-let xprev = 0;
+let xprev1 = 0;
 let yprev = 0;
 
-window.addEventListener('mousemove',(evt)=>{
-    console.log(evt.clientY);
+
+
+window.addEventListener('load',()=>{
+    heroEnd.classList.add('hero-end-show');
+    headBox1H1.forEach((ele)=>{
+        ele.classList.add('show-h-box-h1');
+    })
+    smallHeadings.forEach((ele)=>{
+        ele.classList.add('move-head-ele-show');
+    })
 })
+
+
 
 document.addEventListener('mouseleave',()=>{
     mouseCircle.style.display = 'none';
@@ -25,16 +38,17 @@ document.addEventListener("mousemove", (evt)=>{
     let xscale = 1;
     let yscale = 1;
 
-    var xdiff = Math.abs(evt.clientX - xprev) ;
+    var xdiff1 = Math.abs(evt.clientX - xprev1) ;
     var ydiff = Math.abs(evt.clientY - yprev) ;
 
-    xprev = evt.clientX;
+    xprev1 = evt.clientX;
     yprev = evt.clientY;
 
-    xscale = gsap.utils.clamp(0.8,1.3,xdiff/3);
-    yscale = gsap.utils.clamp(0.8,1.3,ydiff/3);
+    xscale = gsap.utils.clamp(0.8,1.2,xdiff1/3);
+    yscale = gsap.utils.clamp(0.8,1.2,ydiff/3);
+    let tipLength = mouseCircle.clientHeight/2;
 
-    mouseCircle.style.transform = `translate(${evt.clientX - 5}px, ${evt.clientY - 5}px) scale(${xscale},${yscale})`;
+    mouseCircle.style.transform = `translate( ${evt.clientX - tipLength}px, ${evt.clientY - tipLength}px ) scale(${xscale},${yscale})`;
     
     timeout = setTimeout(()=>{
 
@@ -70,10 +84,10 @@ function formatTime(hours,minutes){
     }
 
     if(amPm){
-        return `${hours} : ${minutes} am`;
+        return `${hours} : ${minutes} AM EST`;
     }
     else{
-        return `${hours} : ${minutes} pm`;  
+        return `${hours} : ${minutes} PM EST`;  
     }
     
 }
@@ -100,23 +114,29 @@ workBoxes.forEach((box,index)=>{
         img = box.querySelector('img');
         img.style.display = 'block';
 
-        // console.log(evt.clientX);
-
-        // const height = img.offsetHeight * 2;
-        // const width = img.offsetWidth * 0.5;
-
-        // const boxTop = box.getBoundingClientRect().top;
-        // const boxHeight = box.getBoundingClientRect().bottom;
-
-        // mouseY1 = boxTop - evt.clientY;
-        // mouseY2 = boxHeight - evt.clientY;
+        
+        let xprev2 = 0;
+        let xdiff2;
 
         box.addEventListener('mousemove',(evt)=>{
-            img.style.transform = `translate(-50%,-50%)`;
+            // mouseCircle.style.transform = 'scale(1,1)';
             img.style.left = `${evt.clientX}px`;
-            //     console.log(evt.clientX,img.style.left);
             img.style.top = `${window.scrollY + evt.clientY}px`;
-            // console.log(evt.clientY,img.style.top);
+         
+            xdiff2 = evt.clientX - xprev2;
+            xprev2 = evt.clientX;
+            
+            let rotate = gsap.utils.clamp(-10,10,xdiff2);
+
+            // mouseCircle.style.transition = 'translate 0s ease-out';
+            mouseCircle.style.height = '2vw';
+            mouseCircle.style.width = '2vw';
+            mouseCircle.innerText = 'View';
+
+            
+            img.style.transform = `translate(-50%,-50%) rotateZ(${rotate}deg)`;
+            
+
 
         })
 
@@ -127,6 +147,12 @@ workBoxes.forEach((box,index)=>{
 
         img = box.querySelector('img');
         img.style.display = 'none';
+
+        mouseCircle.style.transition = 'all 0.1s ease-out';
+        mouseCircle.style.height = '13px';
+        mouseCircle.style.width = '13px';
+        mouseCircle.innerText = '';
+        
 
     })
 })
