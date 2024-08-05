@@ -8,21 +8,78 @@ const imgHudu= document.querySelector(".img-hudu");
 const heroEnd = document.querySelector(".hero-end");
 const headBox1H1 = document.querySelectorAll('.head_box1 h1');
 const smallHeadings =document.querySelectorAll('.move-head-ele *');
+const inputRange = document.querySelector("#load");
+const value = document.querySelector(".value");
+const loadBox = document.querySelector(".loading-box");
+const heroNav = document.querySelector(".hero-nav");
 
 let xprev1 = 0;
 let yprev = 0;
+let val = 1;
 
 
 
-window.addEventListener('load',()=>{
-    heroEnd.classList.add('hero-end-show');
-    headBox1H1.forEach((ele)=>{
-        ele.classList.add('show-h-box-h1');
+ function load(){
+     
+     loadBox.classList.toggle("hide-load");
+
+    return new Promise((resolve, reject) => {
+        
+
+       
+        const checkVal = setInterval(()=>{
+          
+            if(val>100){
+            
+                clearInterval(checkVal);
+                console.log("promise interval is cleared(3)");
+                resolve(100);
+            }
+            else{
+                inputRange.style.background = `linear-gradient(to right , black ${val}%, white ${val}%)`;
+                value.innerText = `${val} %`;
+                val++;
+            }
+
+        },30)
+       
     })
-    smallHeadings.forEach((ele)=>{
-        ele.classList.add('move-head-ele-show');
+}
+
+
+
+    window.addEventListener('load',async ()=>{
+
+        // window.scrollTo(0,0);
+
+        await load();
+    
+        heroEnd.classList.add('hero-end-show');
+        headBox1H1.forEach((ele)=>{
+            ele.classList.add('show-h-box-h1');
+        })
+        smallHeadings.forEach((ele)=>{
+            ele.classList.add('move-head-ele-show');
+        })
+
+        
+        console.log("Before Scrolling");
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth'
+        });
+        console.log("After Scrolling");
+        
+        heroNav.classList.remove("hide-nav");
+        setTimeout(()=>{
+            
+            loadBox.classList.toggle("hide-load");
+        },500)
+        document.body.style.backgroundColor = 'black';
+
+            
     })
-})
+        
 
 
 
@@ -58,18 +115,6 @@ document.addEventListener("mousemove", (evt)=>{
 
 });
 
-
-
-
-document.addEventListener('wheel', (evt)=>{
-
-    evt.preventDefault();
-    window.scrollBy({
-        top : evt.deltaY ,
-        behavior : "smooth"
-    });
-
-},{passive : false});
 
 
 function formatTime(hours,minutes){
