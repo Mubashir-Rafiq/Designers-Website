@@ -42,10 +42,26 @@ let val = 1;
        
     })
 }
+let viewsCount;
+function countViews(){
+    let views = localStorage.getItem('views');
+    
+    if(views===null){
+        views = 0;
+    }
+    else{
+        viewsCount = JSON.parse(views);
+    }
+    viewsCount++;
+    localStorage.setItem('views',JSON.stringify(viewsCount));
+    // localStorage.clear();
+
+}
 
 
 window.addEventListener('load',async ()=>{
-
+  
+    countViews();
     const isFirstLoad = sessionStorage.getItem('hasVisitedBefore');
     
     if(isFirstLoad){
