@@ -74,7 +74,8 @@ function countViews(){
 
 window.addEventListener('load',async ()=>{
   
-    
+    mouseCircle.style.display = 'block';
+
     const isFirstLoad = sessionStorage.getItem('hasVisitedBefore');
     
     if(isFirstLoad){
