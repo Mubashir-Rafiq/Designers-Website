@@ -73,7 +73,7 @@ main{
     appearance: none;
 }
 
-.hide-load{
+.show-load{
     display: flex;
 }
 

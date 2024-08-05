@@ -21,18 +21,15 @@ let val = 1;
 
  function load(){
      
-     loadBox.classList.toggle("hide-load");
+     loadBox.classList.add("show-load");
 
     return new Promise((resolve, reject) => {
         
-
-       
         const checkVal = setInterval(()=>{
           
             if(val>100){
             
                 clearInterval(checkVal);
-                console.log("promise interval is cleared(3)");
                 resolve(100);
             }
             else{
@@ -47,38 +44,45 @@ let val = 1;
 }
 
 
+window.addEventListener('load',async ()=>{
 
-    window.addEventListener('load',async ()=>{
-
-        // window.scrollTo(0,0);
-
-        await load();
+    const isFirstLoad = sessionStorage.getItem('hasVisitedBefore');
     
-        heroEnd.classList.add('hero-end-show');
-        headBox1H1.forEach((ele)=>{
-            ele.classList.add('show-h-box-h1');
-        })
-        smallHeadings.forEach((ele)=>{
-            ele.classList.add('move-head-ele-show');
-        })
+    if(isFirstLoad){
 
-        
-        console.log("Before Scrolling");
+        document.body.style.backgroundColor = 'black';
+        loadBox.classList.remove("show-load");
+         
+    }
+    else{
+
+        window.scrollTo(0,0);
+        sessionStorage.setItem('hasVisitedBefore','true');
+        await load();
+        document.body.style.backgroundColor = 'black';
+
         window.scrollTo({
             top: window.innerHeight,
             behavior: 'smooth'
         });
-        console.log("After Scrolling");
-        
-        heroNav.classList.remove("hide-nav");
-        setTimeout(()=>{
-            
-            loadBox.classList.toggle("hide-load");
-        },500)
-        document.body.style.backgroundColor = 'black';
 
-            
+    }
+
+    heroEnd.classList.add('hero-end-show');
+    headBox1H1.forEach((ele)=>{
+        ele.classList.add('show-h-box-h1');
     })
+    smallHeadings.forEach((ele)=>{
+        ele.classList.add('move-head-ele-show');
+    })
+
+    heroNav.classList.remove("hide-nav");
+    setTimeout(()=>{
+        
+        loadBox.classList.remove("show-load");
+    },5000)
+     
+})
         
 
 
