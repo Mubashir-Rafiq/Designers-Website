@@ -42,8 +42,15 @@ let val = 1;
        
     })
 }
-let viewsCount;
+
+
+             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
 function countViews(){
+    try{
+        let viewsCount;
+
     let views = localStorage.getItem('views');
     
     if(views===null){
@@ -54,14 +61,20 @@ function countViews(){
     }
     viewsCount++;
     localStorage.setItem('views',JSON.stringify(viewsCount));
+    console.log(viewsCount);
+
     // localStorage.clear();
+    }
+    catch(error){
+        console.log();
+    }
 
 }
 
 
 window.addEventListener('load',async ()=>{
   
-    countViews();
+    
     const isFirstLoad = sessionStorage.getItem('hasVisitedBefore');
     
     if(isFirstLoad){
@@ -71,7 +84,7 @@ window.addEventListener('load',async ()=>{
          
     }
     else{
-
+        countViews();
         window.scrollTo(0,0);
         sessionStorage.setItem('hasVisitedBefore','true');
         await load();
